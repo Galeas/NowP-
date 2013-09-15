@@ -3,10 +3,12 @@ NowP-
 
 Share your iTunes current song on VK, Facebook or/and Twitter!
 
-<a href="http://s1199.photobucket.com/user/Akki-87/media/421043D0438043C043E043A044D043A04400430043D043002013-08-294320191204.png.html" target="_blank"><img height="200" width="184" src="http://i1199.photobucket.com/albums/aa470/Akki-87/421043D0438043C043E043A044D043A04400430043D043002013-08-294320191204.png" border="0" alt=" photo 421043D0438043C043E043A044D043A04400430043D043002013-08-294320191204.png"/></a>
-<a href="http://s1199.photobucket.com/user/Akki-87/media/421043D0438043C043E043A044D043A04400430043D043002013-08-294320191305.png.html" target="_blank"><img height="200" width="231" src="http://i1199.photobucket.com/albums/aa470/Akki-87/421043D0438043C043E043A044D043A04400430043D043002013-08-294320191305.png" border="0" alt=" photo 421043D0438043C043E043A044D043A04400430043D043002013-08-294320191305.png"/></a>
-<a href="http://s1199.photobucket.com/user/Akki-87/media/421043D0438043C043E043A044D043A04400430043D043002013-08-294320191231.png.html" target="_blank"><img height="200" width="363" src="http://i1199.photobucket.com/albums/aa470/Akki-87/421043D0438043C043E043A044D043A04400430043D043002013-08-294320191231.png" border="0" alt=" photo 421043D0438043C043E043A044D043A04400430043D043002013-08-294320191231.png"/></a>
-<a href="http://s1199.photobucket.com/user/Akki-87/media/421043D0438043C043E043A044D043A04400430043D043002013-08-294320190801.png.html" target="_blank"><img height="180" width="200" src="http://i1199.photobucket.com/albums/aa470/Akki-87/421043D0438043C043E043A044D043A04400430043D043002013-08-294320190801.png" border="0" alt=" photo 421043D0438043C043E043A044D043A04400430043D043002013-08-294320190801.png"/></a><a href="http://s1199.photobucket.com/user/Akki-87/media/421043D0438043C043E043A044D043A04400430043D043002013-08-294320192339.png.html" target="_blank"><img height="200" width="337" src="http://i1199.photobucket.com/albums/aa470/Akki-87/421043D0438043C043E043A044D043A04400430043D043002013-08-294320192339.png" border="0" alt=" photo 421043D0438043C043E043A044D043A04400430043D043002013-08-294320192339.png"/></a><a href="http://s1199.photobucket.com/user/Akki-87/media/421043D0438043C043E043A044D043A04400430043D043002013-08-294320192345.png.html" target="_blank"><img height="180" width="310" src="http://i1199.photobucket.com/albums/aa470/Akki-87/421043D0438043C043E043A044D043A04400430043D043002013-08-294320192345.png" border="0" alt=" photo 421043D0438043C043E043A044D043A04400430043D043002013-08-294320192345.png"/></a>
+<img height="200" width="183" src="http://i3.inmac.org/092013/150eb2a76b6f2dfd.png"/>
+<img height="200" width="362" src="http://i3.inmac.org/092013/fbe226e142fbb6e0.png"/>
+<img height="200" width="203" src="http://i3.inmac.org/092013/7d17ea3bb089a37f.png"/>
+<img height="200" width="209" src="http://i3.inmac.org/092013/fefbe88cd38c593b.png"/>
+<img height="200" width="268" src="http://i3.inmac.org/092013/adf1e47a4cdf38b3.png"/>
+<img height="180" width="273" src="http://i3.inmac.org/092013/a87ca26f3ebb0d88.png"/>
 
 Делитесь информацией о текущей песне в Вашем iTunes на ВК, Facebook и/или Twitter!
 

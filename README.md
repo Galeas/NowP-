@@ -7,7 +7,7 @@ Share your iTunes current song on VK, Facebook or/and Twitter!
 <img height="200" width="362" src="http://i3.inmac.org/092013/fbe226e142fbb6e0.png"/>
 <img height="200" width="203" src="http://i3.inmac.org/092013/7d17ea3bb089a37f.png"/>
 <img height="200" width="209" src="http://i3.inmac.org/092013/fefbe88cd38c593b.png"/>
-<img height="200" width="268" src="http://i3.inmac.org/092013/adf1e47a4cdf38b3.png"/>
+<img height="200" width="268" src="http://i60.fastpic.ru/big/2013/0916/52/b8df67be967f114cd50dab7b96c47952.jpeg"/>
 <img height="180" width="273" src="http://i3.inmac.org/092013/a87ca26f3ebb0d88.png"/>
 
 Делитесь информацией о текущей песне в Вашем iTunes на ВК, Facebook и/или Twitter!

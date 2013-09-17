@@ -17,7 +17,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    cleanAppSettings();
+//    cleanAppSettings();
     NSString *currentVersion = settingsVersion();
     NSString *bundleVersion = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleShortVersionString"];
     if (![currentVersion isEqualToString:bundleVersion]) {

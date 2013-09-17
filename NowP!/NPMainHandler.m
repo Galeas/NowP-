@@ -108,6 +108,10 @@
     BOOL controlEnabled = [[general valueForKey:kAllowControlKey] boolValue];
     [self connectShortcuts:controlEnabled];
     
+    if ([[preferences valueForKey:kVKStatusPolicy] integerValue] != kIgnoreStatusRestoring) {
+        [[NSApp delegate] cacheVKStatus];
+    }
+    
     [self iTunesInfoDidUpdate];
 }
 
@@ -271,10 +275,24 @@
     NSInteger trackID = [track databaseID];
     
     if (isRadio) {
-        iTunesURLTrack *urlTrack = (iTunesURLTrack*)[track get];
-        artist = urlTrack.name;
-        name = urlTrack.address;
-        if (!name) name = @"";
+        iTunesApplication *itunes = [NPiTunesController iTunes];
+        NSString *description = [itunes currentStreamTitle];
+        if (description) {
+            NSArray *components = [description componentsSeparatedByString:@" - "];
+            if ([components count] == 2) {
+                artist = [components objectAtIndex:0];
+                name = [components objectAtIndex:1];
+            }
+            else {
+                name = description;
+                artist = @"";
+            }
+        }
+        else {
+            iTunesURLTrack *urlTrack = [track get];
+            artist = @"Online radiostation";
+            name = [urlTrack address];
+        }
     }
     else {
         artist = track.artist;
@@ -298,8 +316,8 @@
         [self.artworkPopover setTrack:nil];
         
         [self.popover setArtist:artist];
-        if (!isRadio)
-            [self.popover setName:name];
+//        if (!isRadio)
+        [self.popover setName:name];
         NSString *tooltip = [artist stringByAppendingFormat:@" - %@", name];
         [self.statusItem.view setToolTip:tooltip];
         
@@ -360,7 +378,8 @@
         [self setLastSendedTrackID:NSNotFound];
         _VKOnly = YES;
     }
-    if (state == iTunesEPlSPlaying && trackID != self.lastSendedTrackID) {
+    BOOL isRadio = [[info valueForKey:@"isRadio"] boolValue];
+    if ((state == iTunesEPlSPlaying && trackID != self.lastSendedTrackID) || (state == iTunesEPlSPlaying && isRadio)) {
         NSInteger config = self.accountsConfiguration;
         if (config & kTWFlag && !_VKOnly) {
             [self setTwitterStatus:info];
@@ -378,13 +397,13 @@
                     [weakSelf setVKFBStatus:info social:kFBFlag sender:weakSelf];
                 }
                 if (config & kLFFlag && !vkOnly) {
-                    BOOL isRadio = [[info valueForKey:@"isRadio"] boolValue];
                     if (!isRadio)
                         [weakSelf lastFMScrobble:info];
                 }
+                if (vkOnly)
+                    strongSelf->_VKOnly = NO;
             });
         }
-        _VKOnly = NO;
     }
 }
 
@@ -396,7 +415,19 @@
     
     if (!_twitter) return;
     __weak NPMainHandler *weakSelf = self;
-    [_twitter postStatusUpdate:[NSString stringWithFormat:@"%@ - %@", artist, name] inReplyToStatusID:nil latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil successBlock:^(NSDictionary *response){
+    NSString *statusUpdate = nil;
+    if (artist.length > 0 && name.length > 0) {
+        statusUpdate = [NSString stringWithFormat:@"%@ - %@", artist, name];
+    }
+    else {
+        if (artist.length > 0 && name.length == 0) {
+            statusUpdate = artist;
+        }
+        else {
+            statusUpdate = name;
+        }
+    }
+    [_twitter postStatusUpdate:statusUpdate inReplyToStatusID:nil latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil successBlock:^(NSDictionary *response){
         [weakSelf setLastSendedTrackID:trackID];
         [[NSApp delegate] setNeedUpdateVKStatus:NO];
     } errorBlock:^(NSError *error) {
@@ -426,8 +457,21 @@
             NSString *accessToken = [fb valueForKeyPath:kAccessTokenKey];
             NSMutableURLRequest *fbrequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/me/feed?access_token=%@", accessToken]]];
             [fbrequest setHTTPMethod:@"POST"];
-            NSString *text = [[NSString stringWithFormat:@"%@ - %@", artist, name] stringUsingEncoding:NSUTF8StringEncoding];
-            [fbrequest setHTTPBody:[[@"message=" stringByAppendingString:text] dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSString *statusUpdate = nil;
+            if (artist.length > 0 && name.length > 0) {
+                statusUpdate = [NSString stringWithFormat:@"%@ - %@", artist, name];
+            }
+            else {
+                if (artist.length > 0 && name.length == 0) {
+                    statusUpdate = artist;
+                }
+                else {
+                    statusUpdate = name;
+                }
+            }
+            
+            [fbrequest setHTTPBody:[[@"message=" stringByAppendingString:[statusUpdate stringUsingEncoding:NSUTF8StringEncoding]] dataUsingEncoding:NSUTF8StringEncoding]];
             request = fbrequest;
             break;
         }
@@ -443,7 +487,21 @@
             NSArray *items = [[NSJSONSerialization JSONObjectWithData:data options:0 error:&error] valueForKey:@"response"];
             if ([items count] == 0) {
                 NSString *accessToken = [[[[NPPreferencesController preferences] accountsSettings] objectForKey:kVKServiceKey] valueForKey:kAccessTokenKey];
-                NSString *text = [[NSString stringWithFormat:@"%@ - %@ [ by NowP! app ]", artist, name] stringUsingEncoding:NSUTF8StringEncoding];
+                
+                NSString *statusUpdate = nil;
+                if (artist.length > 0 && name.length > 0) {
+                    statusUpdate = [NSString stringWithFormat:@"%@ - %@", artist, name];
+                }
+                else {
+                    if (artist.length > 0 && name.length == 0) {
+                        statusUpdate = artist;
+                    }
+                    else {
+                        statusUpdate = name;
+                    }
+                }
+                
+                NSString *text = [[NSString stringWithFormat:@"%@ [ by NowP! app ]", statusUpdate] stringUsingEncoding:NSUTF8StringEncoding];
                 NSString *stringURL = [NSString stringWithFormat:@"https://api.vk.com/method/status.set?text=%@&access_token=%@&v=5.0", text, accessToken];
                 [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringURL]] returningResponse:NULL error:&error];
                 [[NSApp delegate] setNeedUpdateVKStatus:NO];

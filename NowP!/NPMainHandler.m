@@ -359,6 +359,23 @@
     [self setSocialStatus:info];
 }
 
+- (NSString*)statusUpdateArtist:(NSString*)artist title:(NSString*)title
+{
+    NSString *statusUpdate = nil;
+    if (artist.length > 0 && title.length > 0) {
+        statusUpdate = [NSString stringWithFormat:@"%@ - %@", artist, title];
+    }
+    else {
+        if (artist.length > 0 && title.length == 0) {
+            statusUpdate = artist;
+        }
+        else {
+            statusUpdate = title;
+        }
+    }
+    return statusUpdate;
+}
+
 - (void)setSocialStatus:(NSDictionary*)info
 {
     if (!info) {
@@ -415,18 +432,7 @@
     
     if (!_twitter) return;
     __weak NPMainHandler *weakSelf = self;
-    NSString *statusUpdate = nil;
-    if (artist.length > 0 && name.length > 0) {
-        statusUpdate = [NSString stringWithFormat:@"%@ - %@", artist, name];
-    }
-    else {
-        if (artist.length > 0 && name.length == 0) {
-            statusUpdate = artist;
-        }
-        else {
-            statusUpdate = name;
-        }
-    }
+    NSString *statusUpdate = [self statusUpdateArtist:artist title:name];
     [_twitter postStatusUpdate:statusUpdate inReplyToStatusID:nil latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil successBlock:^(NSDictionary *response){
         [weakSelf setLastSendedTrackID:trackID];
         [[NSApp delegate] setNeedUpdateVKStatus:NO];
@@ -457,20 +463,7 @@
             NSString *accessToken = [fb valueForKeyPath:kAccessTokenKey];
             NSMutableURLRequest *fbrequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/me/feed?access_token=%@", accessToken]]];
             [fbrequest setHTTPMethod:@"POST"];
-            
-            NSString *statusUpdate = nil;
-            if (artist.length > 0 && name.length > 0) {
-                statusUpdate = [NSString stringWithFormat:@"%@ - %@", artist, name];
-            }
-            else {
-                if (artist.length > 0 && name.length == 0) {
-                    statusUpdate = artist;
-                }
-                else {
-                    statusUpdate = name;
-                }
-            }
-            
+            NSString *statusUpdate = [self statusUpdateArtist:artist title:name];
             [fbrequest setHTTPBody:[[@"message=" stringByAppendingString:[statusUpdate stringUsingEncoding:NSUTF8StringEncoding]] dataUsingEncoding:NSUTF8StringEncoding]];
             request = fbrequest;
             break;
@@ -487,20 +480,7 @@
             NSArray *items = [[NSJSONSerialization JSONObjectWithData:data options:0 error:&error] valueForKey:@"response"];
             if ([items count] == 0) {
                 NSString *accessToken = [[[[NPPreferencesController preferences] accountsSettings] objectForKey:kVKServiceKey] valueForKey:kAccessTokenKey];
-                
-                NSString *statusUpdate = nil;
-                if (artist.length > 0 && name.length > 0) {
-                    statusUpdate = [NSString stringWithFormat:@"%@ - %@", artist, name];
-                }
-                else {
-                    if (artist.length > 0 && name.length == 0) {
-                        statusUpdate = artist;
-                    }
-                    else {
-                        statusUpdate = name;
-                    }
-                }
-                
+                NSString *statusUpdate = [self statusUpdateArtist:artist title:name];
                 NSString *text = [[NSString stringWithFormat:@"%@ [ by NowP! app ]", statusUpdate] stringUsingEncoding:NSUTF8StringEncoding];
                 NSString *stringURL = [NSString stringWithFormat:@"https://api.vk.com/method/status.set?text=%@&access_token=%@&v=5.0", text, accessToken];
                 [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringURL]] returningResponse:NULL error:&error];

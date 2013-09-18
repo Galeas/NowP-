@@ -112,7 +112,8 @@ static NSString *const kLastFMAPIKey = @"842f9a0390954bf47248f25a44adfba9";
                         }
                     }
                 }
-                [strongSelf->_foundImages setObject:[NSArray arrayWithArray:possible] forKey:kGoogleImages];
+                if ([possible count] > 0)
+                    [strongSelf->_foundImages setObject:[NSArray arrayWithArray:possible] forKey:kGoogleImages];
                 [strongSelf setGoogleImages:NO];
                 dispatch_async(senderQueue, ^{
                     [strongSelf searchComplete];
@@ -123,7 +124,7 @@ static NSString *const kLastFMAPIKey = @"842f9a0390954bf47248f25a44adfba9";
     dispatch_release(googleQueue);
 }
 
-- (void) lastFMSearch
+- (void)lastFMSearch
 {
     NSString *artist = self.track.artist;
     NSString *album = self.track.album;
@@ -172,10 +173,20 @@ static NSString *const kLastFMAPIKey = @"842f9a0390954bf47248f25a44adfba9";
             NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
             if (responseDict && !error) {
                 NSArray *imageURLs = [responseDict valueForKeyPath:@"track.album.image"];
+                if (!imageURLs) {
+                    imageURLs = [responseDict valueForKeyPath:@"album.image"];
+                }
+                if (!imageURLs) {
+                    [strongSelf setLastFM:NO];
+                    dispatch_async(senderQueue, ^{
+                        [strongSelf searchComplete];
+                    });
+                    return;
+                }
                 NSMutableArray *images = [NSMutableArray arrayWithCapacity:imageURLs.count];
                 for (NSDictionary *imageDict in imageURLs) {
                     NSString *imageURLString = [imageDict valueForKey:@"#text"];
-                    NSURLRequest *imgRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURLString] cachePolicy:NSURLCacheStorageAllowedInMemoryOnly timeoutInterval:3];
+                    NSURLRequest *imgRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURLString] cachePolicy:NSURLCacheStorageAllowedInMemoryOnly timeoutInterval:5];
                     NSURLResponse *imgResponse = nil;
                     NSError *imgError = nil;
                     NSData *imageData = [NSURLConnection sendSynchronousRequest:imgRequest returningResponse:&imgResponse error:&imgError];
@@ -184,7 +195,8 @@ static NSString *const kLastFMAPIKey = @"842f9a0390954bf47248f25a44adfba9";
                         [images addObject:image];
                     }
                 }
-                [strongSelf->_foundImages setObject:[NSArray arrayWithArray:images] forKey:kLastFMImages];
+                if ([images count] > 0)
+                    [strongSelf->_foundImages setObject:[NSArray arrayWithArray:images] forKey:kLastFMImages];
                 [strongSelf setLastFM:NO];
                 dispatch_async(senderQueue, ^{
                     [strongSelf searchComplete];

@@ -207,7 +207,7 @@
         [self.artworkPopover showRelativeToRect:self.statusItem.view.frame  ofView:self.statusItem.view preferredEdge:NSMinYEdge];
     }
     else {
-        [self.artworkPopover getArtwork:[[NPiTunesController iTunes] currentTrack] sender:self.statusItem.view lastFMAllowed:NO];
+        [self.artworkPopover getArtwork:[[NPiTunesController iTunes] currentTrack] sender:self.statusItem.view lastFMAllowed:YES];
     }
 }
 

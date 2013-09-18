@@ -178,7 +178,6 @@
         NPArtworkTagController *strongSelf = weakSelf;
         if (!strongSelf) return;
         if ([images count] > 0) {
-            
             [strongSelf setTrackArtworks:images];
             NSView *imagesContainer = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 0, 190)];
             CGFloat currentX = 5;
@@ -209,27 +208,6 @@
                     }
                 }
             }
-//            for (NSImage *img in images) {
-//                NPArtworkView *imgView = [[NPArtworkView alloc] initWithFrame:NSMakeRect(currentX, 5, 190, 190)];
-//                [imgView setImageScaling:NSImageScaleProportionallyUpOrDown];
-//                [imgView setImageAlignment:NSImageAlignCenter];
-//                [imgView setImage:img];
-//                
-//                NSButton *btn = [[NSButton alloc] initWithFrame:NSMakeRect(190/2 - 60.5, 190/2 - 13, 121, 26)];
-//                [btn setTarget:strongSelf.contentViewController];
-//                [btn setAction:@selector(artworkSelected:)];
-//                [btn setAlphaValue:.3];
-//                [btn setImage:[NSImage imageNamed:@"use_artwork_bg"]];
-//                [[btn cell] setHighlightsBy:NSContentsCellMask];
-//                [btn setButtonType:NSMomentaryChangeButton];
-//                [btn setBordered:NO];
-//                [btn setTitle:@""];
-//                [btn setImagePosition:NSImageOnly];
-//                [imgView addSubview:btn];
-//                
-//                [imagesContainer addSubview:imgView];
-//                currentX += 195;
-//            }
             NPArtworkViewController *viewController = (NPArtworkViewController*)weakSelf.contentViewController;
             [imagesContainer setFrameSize:NSMakeSize(currentX, 190)];
             if (imagesContainer.frame.size.width < 450) {

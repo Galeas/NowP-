@@ -52,7 +52,7 @@
     [_sender setLyricsProcessing:YES];
     dispatch_async(requestQueue, ^{
         NPLyricsTagger *strongSelf = weakSelf;
-        if (!strongSelf) return;
+        NSAssert((strongSelf != nil), @"Lyrics tagger is out of scope!");
         
         NSURLResponse *response = nil;
         NSError *error = nil;
@@ -67,18 +67,27 @@
                     
                     NSString *lyricString;
                     NSString *raw = [lyricBox rawContents];
-                    HTMLNode *sorry = [lyricBox findChildTag:@"i"];
-                    if (sorry) {
-                        NSInteger lastDot = [[sorry contents] rangeOfString:@"." options:NSBackwardsSearch].location + 1;
-                        NSString *sorryStr = [[sorry contents] substringToIndex:lastDot];
-                        lyricString = [[[raw stringBetweenString:@"</div>" andString:@"<i>"] stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"] stringByAppendingFormat:@"\n%@",sorryStr];
+                    HTMLNode *italics = [lyricBox findChildTag:@"i"];
+                    HTMLNode *bold = [lyricBox findChildTag:@"b"];
+                    if (italics && [[italics contents] rangeOfString:@"Unfortunately, we are not licensed to display the full lyrics for this song at the moment."].location != NSNotFound) {
+                        NSInteger lastDot = [[italics contents] rangeOfString:@"." options:NSBackwardsSearch].location + 1;
+                        if (lastDot != NSNotFound) {
+                            NSString *sorryStr = [[italics contents] substringToIndex:lastDot];
+                            lyricString = [[[raw stringBetweenString:@"</div>" andString:@"<i>"] stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"] stringByAppendingFormat:@"\n%@",sorryStr];
+                        }
+                        else {
+                            lyricString = @"Unfortunately, we are not licensed to display the full lyrics for this song at the moment.";
+                        }
                     }
-                    HTMLNode *instrumental = [lyricBox findChildTag:@"b"];
-                    if (instrumental) {
-                        lyricString = [[instrumental contents] stringByAppendingString:@"\n"];
+                    else if (bold && [[bold contents] rangeOfString:@"Instrumental"].location != NSNotFound) {
+                        lyricString = [[bold contents] stringByAppendingString:@"\n"];
                     }
                     else {
                         lyricString = [[raw stringBetweenString:@"</div>" andString:@"<!--"] stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
+                        lyricString = [lyricString stringByReplacingOccurrencesOfString:@"<i>" withString:@""];
+                        lyricString = [lyricString stringByReplacingOccurrencesOfString:@"</i>" withString:@""];
+                        lyricString = [lyricString stringByReplacingOccurrencesOfString:@"<b>" withString:@""];
+                        lyricString = [lyricString stringByReplacingOccurrencesOfString:@"</b>" withString:@""];
                     }
                     lyricString = [[NSString stringWithFormat:@"%@\n%@\n\n",name, artist] stringByAppendingString:[lyricString stringByAppendingFormat:@"\n[ NowP! : %@ ]", [lyricsURL absoluteString]]];
                     [strongSelf.track setLyrics:lyricString];

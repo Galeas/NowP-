@@ -84,8 +84,12 @@
 
 - (iTunesEPlS)iTunesState
 {
-    iTunesEPlS state = [NPiTunesController iTunes].playerState;
-    return state;
+    iTunesApplication *itunes = [NPiTunesController iTunes];
+    if ([itunes isRunning]) {
+        iTunesEPlS state = [NPiTunesController iTunes].playerState;
+        return state;
+    }
+    return iTunesEPlSStopped;
 }
 
 - (void)setHighlighted:(BOOL)highlighted

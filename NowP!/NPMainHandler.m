@@ -214,15 +214,20 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
     if ([menuItem action] == @selector(searchForCovers)) {
-        iTunesTrack *track = [[NPiTunesController iTunes] currentTrack];
-        if ([[[track get] className] isEqualToString:@"ITunesURLTrack"]) {
-            return NO;
-        }
-        if ([self.artworkPopover.track isEqualTo:track] && [self.artworkPopover.trackArtworks count] > 0) {
-            [menuItem setTitle:@"Show current song artworks"];
+        if ([[NPiTunesController iTunes] isRunning]) {
+            iTunesTrack *track = [[NPiTunesController iTunes] currentTrack];
+            if ([[[track get] className] isEqualToString:@"ITunesURLTrack"]) {
+                return NO;
+            }
+            if ([self.artworkPopover.track isEqualTo:track] && [self.artworkPopover.trackArtworks count] > 0) {
+                [menuItem setTitle:@"Show current song artworks"];
+            }
+            else {
+                [menuItem setTitle:@"Search current song artwork"];
+            }
         }
         else {
-            [menuItem setTitle:@"Search current song artwork"];
+            return NO;
         }
     }
     return YES;

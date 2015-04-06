@@ -1,7 +1,32 @@
 //
-// Prefix header for all source files of the 'NowP!' target in the 'NowP!' project
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
 //
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import "Utils.h"
+
+    #ifdef DEBUG
+    # define DLog(...) NSLog(__VA_ARGS__)
+    #else
+    # define DLog(...) /* */
+    #endif
+    #define ALog(...) NSLog(__VA_ARGS__)
+
+//#define FB_TOKEN [[NSApp delegate] valueForKey:@"facebookToken"]
+//#define VK_TOKEN [[NSApp delegate] valueForKey:@"vkToken"]
+//#define TW_WRAPPER (STTwitterAPI*)[[NSApp delegate] valueForKey:@"twitterWrapper"]
+//#define LF_TOKEN [[NSApp delegate] valueForKey:@"lfToken"]
+//#define SOCIAL_MASK (NPAccountMask)[[[NSApp delegate] valueForKey:@"socialMask"] integerValue]
+//#define LAST_TRACK_ID [[[NSApp delegate] valueForKey:@"lastTrackID"] unsignedIntegerValue]
+//#define SET_FB_TOKEN(token) [[NSApp delegate] setValue:(token) forKey:@"facebookToken"]
+//#define SET_VK_TOKEN(token) [[NSApp delegate] setValue:(token) forKey:@"vkToken"]
+//#define SET_LF_TOKEN(token) [[NSApp delegate] setValue:(token) forKey:@"lfToken"]
+//#define SET_TW_WRAPPER(twitter) [[NSApp delegate] setValue:(twitter) forKey:@"twitterWrapper"]
+//#define SET_SOCIAL_MASK(mask) [[NSApp delegate] setValue:@((mask)) forKey:@"socialMask"]
+//#define SET_LAST_TRACK_ID(track) [[NSApp delegate] setValue:@((track)) forKey:@"lastTrackID"]
+
+
 #endif

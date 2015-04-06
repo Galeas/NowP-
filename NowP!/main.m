@@ -2,13 +2,13 @@
 //  main.m
 //  NowP!
 //
-//  Created by Евгений Браницкий on 05.08.13.
-//  Copyright (c) 2013 Akki. All rights reserved.
+//  Created by Evgeniy Kratko on 24.06.14.
+//  Copyright (c) 2014 Yevgeniy Kratko (Branitsky). All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
-int main(int argc, char *argv[])
+int main(int argc, const char * argv[])
 {
-    return NSApplicationMain(argc, (const char **)argv);
+    return NSApplicationMain(argc, argv);
 }

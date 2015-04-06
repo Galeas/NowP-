@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>tag_artwork</key>
+	<true/>
+	<key>tag_lyrics</key>
+	<true/>
+	<key>accounts</key>
+	<dict>
+		<key>1004</key>
+		<dict>
+			<key>enabled</key>
+			<false/>
+		</dict>
+		<key>1001</key>
+		<dict>
+			<key>enabled</key>
+			<false/>
+		</dict>
+		<key>1002</key>
+		<dict>
+			<key>enabled</key>
+			<false/>
+		</dict>
+		<key>1003</key>
+		<dict>
+			<key>enabled</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>appearance</key>
+	<array>
+		<dict>
+			<key>alignment</key>
+			<integer>2</integer>
+			<key>backgroundColor</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgCDFK5HP4Y=</data>
+			<key>font</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAZOU0ZvbnQehIQITlNPYmplY3QAhYQBaSyEBVs0NGNdBgAAACQAAAD//kwAdQBjAGkAZABhAEcAcgBhAG4AZABlAC0AQgBvAGwAZACEAWYOhAFjAJgBmACYAIY=</data>
+			<key>foregroundColor</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZoPNzEw/AYY=</data>
+			<key>name</key>
+			<string>artist</string>
+			<key>title</key>
+			<string>Current track artist</string>
+		</dict>
+		<dict>
+			<key>alignment</key>
+			<integer>2</integer>
+			<key>backgroundColor</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgCDFK5HP4Y=</data>
+			<key>font</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAZOU0ZvbnQehIQITlNPYmplY3QAhYQBaSyEBVs0NGNdBgAAACQAAAD//kwAdQBjAGkAZABhAEcAcgBhAG4AZABlAC0AQgBvAGwAZACEAWYOhAFjAJgBmACYAIY=</data>
+			<key>foregroundColor</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZoPNzEw/AYY=</data>
+			<key>name</key>
+			<string>title</string>
+			<key>title</key>
+			<string>Current track title</string>
+		</dict>
+		<dict>
+			<key>alignment</key>
+			<integer>0</integer>
+			<key>backgroundColor</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgAAhg==</data>
+			<key>font</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAZOU0ZvbnQehIQITlNPYmplY3QAhYQBaSSEBVszNmNdBgAAABwAAAD//kYAdQB0AHUAcgBhAC0ATQBlAGQAaQB1AG0AhAFmDoQBYwCYAZgAmACG</data>
+			<key>foregroundColor</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZoNmZmY/AYY=</data>
+			<key>name</key>
+			<string>lyrics</string>
+			<key>title</key>
+			<string>Lyrics text</string>
+		</dict>
+	</array>
+</dict>
+</plist>
